@@ -32,6 +32,9 @@
 		<require_module version="${appuiVersion}">
 			org.openmrs.module.appui
 		</require_module>
+		<require_module version="${htmlformentryVersion}">
+			org.openmrs.module.htmlformentry
+		</require_module>
 	</require_modules>
 	
 	<!-- Extensions -->
@@ -61,6 +64,13 @@
 	 /Required Privileges -->
 
 
+	<globalProperty>
+		<property>htmlformmigration.resources</property>
+		<defaultValue></defaultValue>
+		<description>
+			Path to a directory where JSON schema for the HTML forms are exported. Please make sure it is writable
+		</description>
+	</globalProperty>
 	<!-- Required Global Properties 
 	<globalProperty>
 		<property>@MODULE_ID@.someProperty</property>

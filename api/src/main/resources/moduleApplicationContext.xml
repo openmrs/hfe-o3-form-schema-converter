@@ -56,11 +56,11 @@
         </property>
     </bean>
 
-    <bean id="kenyaemr.app.htmltojson" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
+<!--    <bean id="kenyaemr.app.htmltojson" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
         <constructor-arg value="kenyaemr.htmltojson.home" />
         <constructor-arg value="HTML TO JSON" />
         <constructor-arg value="htmltojson/htmltojson.page" />
         <constructor-arg value="htmltojson:htmltojson_96_83px.png" />
         <constructor-arg value="889933" />
-    </bean>
+    </bean>-->
 </beans>

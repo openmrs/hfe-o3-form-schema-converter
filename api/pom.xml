@@ -11,4 +11,25 @@
 	<packaging>jar</packaging>
 	<name>HtmlToJson API</name>
 	<description>API project for HtmlToJson</description>
+	<dependencies>
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>htmlformentry-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>htmlwidgets-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>uiframework-api</artifactId>
+		</dependency>
+	</dependencies>
 </project>

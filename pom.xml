@@ -32,25 +32,16 @@
 		<openMRSVersion>2.3.3</openMRSVersion>
 		<!-- Module dependencies -->
 		<appframeworkVersion>2.13.0</appframeworkVersion>
-		<calculationVersion>1.2</calculationVersion>
 		<htmlformentryVersion>3.9.2</htmlformentryVersion>
 		<htmlwidgetsVersion>1.10.0</htmlwidgetsVersion>
 		<legacyUiVersion>1.5.0</legacyUiVersion>
-		<idgenVersion>4.5.0</idgenVersion>
-		<metadatadeployVersion>1.11.0</metadatadeployVersion>
-		<metadatasharingVersion>1.5.0</metadatasharingVersion>
-		<reportingVersion>1.18.0</reportingVersion>
-		<serializationxstreamVersion>0.2.14</serializationxstreamVersion>
+
 		<uiframeworkVersion>3.15.0</uiframeworkVersion>
-		<kenyaemrVersion>18.0.0</kenyaemrVersion>
-		<kenyacoreVersion>3.0.0</kenyacoreVersion>
-		<kenyauiVersion>3.0.0</kenyauiVersion>
-		<hivtestingservicesVersion>1.2.0</hivtestingservicesVersion>
+
 
 		<jodaTimeVersion>2.9.1</jodaTimeVersion>
 		<jacksonVersion>2.13.1</jacksonVersion>
 		<jsonPathVersion>0.8.1</jsonPathVersion>
-		<apacheHttpClientVersion>4.5.13</apacheHttpClientVersion>
 		<webservicesRestVersion>2.26.0</webservicesRestVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -71,20 +62,8 @@
 
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
-				<artifactId>calculation-api</artifactId>
-				<version>${calculationVersion}</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>legacyui-api</artifactId>
-				<version>${legacyUiVersion}</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>legacyui-omod</artifactId>
-				<version>${legacyUiVersion}</version>
+				<artifactId>uiframework-api</artifactId>
+				<version>${uiframeworkVersion}</version>
 				<scope>provided</scope>
 			</dependency>
 
@@ -104,38 +83,17 @@
 
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
-				<artifactId>idgen-api</artifactId>
-				<version>${idgenVersion}</version>
+				<artifactId>legacyui-api</artifactId>
+				<version>${legacyUiVersion}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>legacyui-omod</artifactId>
+				<version>${legacyUiVersion}</version>
 				<scope>provided</scope>
 			</dependency>
 
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>metadatadeploy-api</artifactId>
-				<version>${metadatadeployVersion}</version>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>metadatasharing-api</artifactId>
-				<version>${metadatasharingVersion}</version>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>reporting-api</artifactId>
-				<version>${reportingVersion}</version>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>serialization.xstream-api</artifactId>
-				<version>${serializationxstreamVersion}</version>
-				<scope>provided</scope>
-			</dependency>
 
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
@@ -143,39 +101,7 @@
 				<version>${uiframeworkVersion}</version>
 				<scope>provided</scope>
 			</dependency>
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>kenyaemr-api</artifactId>
-				<version>${kenyaemrVersion}</version>
-				<scope>provided</scope>
-			</dependency>
 
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>hivtestingservices-api</artifactId>
-				<version>${hivtestingservicesVersion}</version>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>kenyacore-api</artifactId>
-				<version>${kenyacoreVersion}</version>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>kenyacore-test</artifactId>
-				<version>${kenyacoreVersion}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>kenyaui-api</artifactId>
-				<version>${kenyauiVersion}</version>
-				<scope>provided</scope>
-			</dependency>
 
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
@@ -215,14 +141,6 @@
 				<type>jar</type>
 				<scope>provided</scope>
 			</dependency>
-
-			<!-- <dependency>
-				<groupId>org.openmrs.web</groupId>
-				<artifactId>openmrs-web</artifactId>
-				<version>${openMRSVersion}</version>
-				<type>jar</type>
-				<scope>provided</scope>
-			</dependency> -->
 
 			<dependency>
 				<groupId>org.openmrs.api</groupId>
@@ -335,13 +253,6 @@
 				<groupId>jakarta-regexp</groupId>
 				<artifactId>jakarta-regexp</artifactId>
 				<version>1.4</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>xforms</artifactId>
-				<version>3.9.5</version>
-				<scope>provided</scope>
 			</dependency>
 
 			<dependency>
