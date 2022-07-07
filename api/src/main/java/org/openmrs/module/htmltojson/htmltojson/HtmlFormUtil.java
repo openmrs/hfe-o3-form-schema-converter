@@ -14,6 +14,7 @@ import org.openmrs.Form;
 import org.openmrs.FormResource;
 import org.openmrs.GlobalProperty;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.ModuleFactory;
 import org.openmrs.module.htmlformentry.HtmlForm;
 import org.openmrs.module.htmlformentry.HtmlFormEntryUtil;
 import org.openmrs.module.htmltojson.UiResource;
@@ -239,6 +240,8 @@ public class HtmlFormUtil {
 					generateFileName = generateFileNameFromHtmlForm(form.getName()) + ".html";
 					generateFileName = pathToResourceDir + generateFileName;
 					createFile(generateFileName, formHtml);
+				} else {
+					System.out.println("Form " + form.getName() + " has no html schema specified. Skipping it");
 				}
 			}
 			
@@ -469,7 +472,7 @@ public class HtmlFormUtil {
 	 */
 	public static HtmlForm getHtmlForm(Form form, ResourceFactory resourceFactory) throws IOException {
 		UiResource xmlResource = getFormXmlResource(form);
-		
+		System.out.println("Form name: " + form.getName());
 		if (xmlResource == null) {
 			// Look in the database
 			HtmlForm hf = HtmlFormEntryUtil.getService().getHtmlFormByForm(form);
@@ -477,13 +480,18 @@ public class HtmlFormUtil {
 				return hf;
 			}
 			
-			throw new RuntimeException("Form has no XML path or persisted html form");
+			//throw new RuntimeException("Form has no XML path or persisted html form");
+			return null;
 		}
-		
+
+		if (!ModuleFactory.isModuleStarted(xmlResource.getProvider())) { // attempt this only if a module is started
+			return null;
+		}
 		String xml = resourceFactory.getResourceAsString(xmlResource.getProvider(), "htmlforms/" + xmlResource.getPath());
 		
 		if (xml == null) {
-			throw new RuntimeException("Form XML could not be loaded from path " + xmlResource + "");
+			//throw new RuntimeException("Form XML could not be loaded from path " + xmlResource + "");
+			return null;
 		}
 		
 		HtmlForm hf = new HtmlForm();
