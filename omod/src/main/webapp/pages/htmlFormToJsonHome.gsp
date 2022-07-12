@@ -367,20 +367,21 @@ tr:nth-child(even) {background-color: #f2f2f2;}
         jq(document).on('click','.viewPayloadButton',function () {
             var formUuid = jq(this).val();
             console.log("Checking form with uuid: " + formUuid);
-
-            ui.getFragmentActionAsJson('htmltojson', 'htmlFormToJsonSchema', 'getFormSchema', { formUuid : formUuid }, function (result) {
+            jq.getJSON('${ui.actionLink("htmltojson", "htmlFormToJsonSchema", "getFormSchema")}',
+                {"formUuid": formUuid}
+            ).success(function (result) {
                 let payloadObject = [];
                 try {
                     payloadObject = JSON.parse(result.payload);
                 } catch(ex) {
                     payloadObject = JSON.parse("{}")
                 }
-                
                 jq('#json-view-display').empty();
                 jq('#json-view-display').jsonViewer(payloadObject,{
                     withQuotes:true,
                     rootCollapsable:true
                 });
+
             });
 
             jq('#showViewPayloadDialog').modal('show');
@@ -390,14 +391,15 @@ tr:nth-child(even) {background-color: #f2f2f2;}
             var formUuid = jq(this).val();
             console.log("Checking form with uuid: " + formUuid);
 
-            ui.getFragmentActionAsJson('htmltojson', 'htmlFormToJsonSchema', 'getFormSchema', { formUuid : formUuid }, function (result) {
+            jq.getJSON('${ui.actionLink("htmltojson", "htmlFormToJsonSchema", "getFormSchema")}',
+                { formUuid : formUuid }
+            ).success(function (result) {
                 let payloadObject = [];
                 try {
                     payloadObject = JSON.parse(result.payload);
                 } catch(ex) {
                     payloadObject = JSON.parse("{}")
                 }
-
                 jq('#json-edit-display').empty();
                 payloadEditor = new JsonEditor('#json-edit-display', payloadObject,{
                     withQuotes:true,
@@ -410,12 +412,15 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 
         jq(document).on('click','#generateForms',function () {
             jq('#formGenerationOutcome').text('');
-            ui.getFragmentActionAsJson('htmltojson', 'htmlFormToJsonSchema', 'generateForms', function (result) {
+
+            jq.getJSON('${ui.actionLink("htmltojson", "htmlFormToJsonSchema", "generateForms")}'
+            ).success(function (result) {
                 var status = result.success === true ? 'HFE schema exported successfully' : 'There was a problem copying html forms. Please check logs for more information';
 
                 jq('#formGenerationOutcome').text(status);
                 console.log(result);
             });
+
         });
     });
 
