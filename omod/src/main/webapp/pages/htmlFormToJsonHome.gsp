@@ -1,8 +1,5 @@
 <%
-    ui.decorateWith("kenyaemr", "standardPage", [layout: "sidebar"])
-    def menuItems = [
-            [label: "Back", iconProvider: "kenyaui", icon: "buttons/back.png", label: "Back to home", href: ui.pageLink("kenyaemr", "userHome")]
-    ]
+    ui.decorateWith("appui", "standardEmrPage") // replace this with an appropriate decorator. We want to use jQuery
 
     ui.includeJavascript("htmltojson", "jquery.twbsPagination.min.js")
     ui.includeJavascript("htmltojson", "jsonViewer/jquery.json-editor.min.js")
@@ -133,9 +130,6 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 }
 </style>
 
-<div class="ke-page-sidebar">
-    ${ui.includeFragment("kenyaui", "widget/panelMenu", [heading: "Back", items: menuItems])}
-</div>
 
 <div class="ke-page-content">
 
@@ -273,7 +267,7 @@ tr:nth-child(even) {background-color: #f2f2f2;}
                     </div>
                     <div class="modal-body">
                         <div>
-                            <span style="padding:2px; display:inline-block;"> <img src="${ui.resourceLink("afyastat", "images/loading.gif")}" /> </span>
+                            <span style="padding:2px; display:inline-block;"> <img src="${ui.resourceLink("htmltojson", "images/loading.gif")}" /> </span>
                         </div>
                     </div>
                 </div>
@@ -374,7 +368,7 @@ tr:nth-child(even) {background-color: #f2f2f2;}
             var formUuid = jq(this).val();
             console.log("Checking form with uuid: " + formUuid);
 
-            ui.getFragmentActionAsJson('afyastat', 'htmlFormToJsonSchema', 'getFormSchema', { formUuid : formUuid }, function (result) {
+            ui.getFragmentActionAsJson('htmltojson', 'htmlFormToJsonSchema', 'getFormSchema', { formUuid : formUuid }, function (result) {
                 let payloadObject = [];
                 try {
                     payloadObject = JSON.parse(result.payload);
@@ -396,7 +390,7 @@ tr:nth-child(even) {background-color: #f2f2f2;}
             var formUuid = jq(this).val();
             console.log("Checking form with uuid: " + formUuid);
 
-            ui.getFragmentActionAsJson('afyastat', 'htmlFormToJsonSchema', 'getFormSchema', { formUuid : formUuid }, function (result) {
+            ui.getFragmentActionAsJson('htmltojson', 'htmlFormToJsonSchema', 'getFormSchema', { formUuid : formUuid }, function (result) {
                 let payloadObject = [];
                 try {
                     payloadObject = JSON.parse(result.payload);
@@ -416,7 +410,7 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 
         jq(document).on('click','#generateForms',function () {
             jq('#formGenerationOutcome').text('');
-            ui.getFragmentActionAsJson('afyastat', 'htmlFormToJsonSchema', 'generateForms', function (result) {
+            ui.getFragmentActionAsJson('htmltojson', 'htmlFormToJsonSchema', 'generateForms', function (result) {
                 var status = result.success === true ? 'HFE schema exported successfully' : 'There was a problem copying html forms. Please check logs for more information';
 
                 jq('#formGenerationOutcome').text(status);

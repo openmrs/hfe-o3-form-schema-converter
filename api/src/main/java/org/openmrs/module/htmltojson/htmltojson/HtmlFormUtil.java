@@ -483,7 +483,7 @@ public class HtmlFormUtil {
 			//throw new RuntimeException("Form has no XML path or persisted html form");
 			return null;
 		}
-
+		
 		if (!ModuleFactory.isModuleStarted(xmlResource.getProvider())) { // attempt this only if a module is started
 			return null;
 		}
