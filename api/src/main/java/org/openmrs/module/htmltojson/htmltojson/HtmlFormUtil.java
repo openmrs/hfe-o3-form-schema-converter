@@ -88,12 +88,6 @@ public class HtmlFormUtil {
 				formJson.put("version", "xxx");
 				formJson.put("published", false);
 				formJson.put("retired", false);
-				
-				/*"processor":"EncounterFormProcessor",
-				"encounterType":"0a573847-276b-4a39-80f2-c3463b1716b0",
-				"referencedForms":[],
-				"uuid":"9b93a6e5-eaad-48f5-ae87-555a71bc8950"*/
-				
 				formJson.put("processor", "EncounterFormProcessor");
 				formJson.put("encounterType", htmlForm.getForm().getEncounterType().getUuid());
 				formJson.put("referencedForms", JsonNodeFactory.instance.arrayNode());
