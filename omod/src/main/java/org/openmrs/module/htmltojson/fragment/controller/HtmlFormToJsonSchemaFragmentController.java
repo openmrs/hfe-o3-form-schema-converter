@@ -42,7 +42,6 @@ public class HtmlFormToJsonSchemaFragmentController {
 	 * @param uuid the queue reference
 	 * @return the summary
 	 */
-	/*@AppAction("kenyaemr.afyastat.htmlToJson")*/
 	public SimpleObject getFormSchema(@RequestParam("formUuid") String uuid, UiUtils ui,
 	        @SpringBean ResourceFactory resourceFactory) throws IOException {
 		org.codehaus.jackson.node.ObjectNode payload = HtmlFormUtil.getFormSchemaJson(uuid, resourceFactory);

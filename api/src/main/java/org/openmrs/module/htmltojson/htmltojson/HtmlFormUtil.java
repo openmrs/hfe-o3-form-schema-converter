@@ -42,6 +42,15 @@ public class HtmlFormUtil {
 	 */
 	public static ObjectNode getFormSchemaJson(String formUuid, ResourceFactory resourceFactory) throws IOException {
 		Form form = Context.getFormService().getFormByUuid(formUuid);
+		ObjectNode formJson = JsonNodeFactory.instance.objectNode();
+		ArrayNode formPages = JsonNodeFactory.instance.arrayNode();
+		
+		ObjectNode defaultFormPage = JsonNodeFactory.instance.objectNode();
+		ArrayNode formSections = JsonNodeFactory.instance.arrayNode();
+		ObjectNode defaultFormSection = JsonNodeFactory.instance.objectNode();
+		defaultFormSection.put("label", "Starter section");
+		defaultFormSection.put("isExpanded", true);
+		
 		ObjectNode questions = JsonNodeFactory.instance.objectNode();
 		ArrayNode questionsList = JsonNodeFactory.instance.arrayNode();
 		
@@ -73,6 +82,16 @@ public class HtmlFormUtil {
 				
 				formHtml = content;
 				Document doc = Jsoup.parse(formHtml);
+				
+				formJson.put("name", htmlForm.getName());
+				formJson.put("description", htmlForm.getForm().getDescription());
+				formJson.put("version", "xxx");
+				formJson.put("published", false);
+				formJson.put("retired", false);
+				formJson.put("processor", "EncounterFormProcessor");
+				formJson.put("encounterType", htmlForm.getForm().getEncounterType().getUuid());
+				formJson.put("referencedForms", JsonNodeFactory.instance.arrayNode());
+				formJson.put("uuid", htmlForm.getUuid());
 				
 				System.out.println("Form name: " + htmlForm.getName());
 				Element htmlform = doc.select("htmlform").first();
@@ -143,8 +162,16 @@ public class HtmlFormUtil {
 				
 			}
 		}
-		questions.put("questions", questionsList);
-		return questions;
+		
+		defaultFormSection.put("questions", questionsList);
+		formSections.add(defaultFormSection);
+		defaultFormPage.put("label", "Starter page");
+		defaultFormPage.put("sections", formSections);
+		formPages.add(defaultFormPage);
+		
+		formJson.put("pages", formPages);
+		
+		return formJson;
 	}
 	
 	/**
