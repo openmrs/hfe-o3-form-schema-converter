@@ -51,6 +51,11 @@ Code organization
 1. Every tag, a data point, has an extractor. This is a class with logic on how to extract information about the tag
 2. Every tag has a renderer class which generates the required JSON schema
 
+Configurations required
+-----------------------
+1. htmlformmigration.resources - a writable directory where html form schema will be exported. Please note this is the absolute path
 
 
-
+Accessing the pages
+-----------------------
+Navigate to <OpenMRS base url>/htmltojson/htmlFormToJsonHome.page

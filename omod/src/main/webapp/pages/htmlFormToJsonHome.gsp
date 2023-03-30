@@ -366,10 +366,11 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 
         jq(document).on('click','.viewPayloadButton',function () {
             var formUuid = jq(this).val();
-            console.log("Checking form with uuid: " + formUuid);
+
             jq.getJSON('${ui.actionLink("htmltojson", "htmlFormToJsonSchema", "getFormSchema")}',
                 {"formUuid": formUuid}
             ).success(function (result) {
+
                 let payloadObject = [];
                 try {
                     payloadObject = JSON.parse(result.payload);
@@ -389,7 +390,6 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 
         jq(document).on('click','.editPayloadButton',function () {
             var formUuid = jq(this).val();
-            console.log("Checking form with uuid: " + formUuid);
 
             jq.getJSON('${ui.actionLink("htmltojson", "htmlFormToJsonSchema", "getFormSchema")}',
                 { formUuid : formUuid }
@@ -418,7 +418,6 @@ tr:nth-child(even) {background-color: #f2f2f2;}
                 var status = result.success === true ? 'HFE schema exported successfully' : 'There was a problem copying html forms. Please check logs for more information';
 
                 jq('#formGenerationOutcome').text(status);
-                console.log(result);
             });
 
         });
