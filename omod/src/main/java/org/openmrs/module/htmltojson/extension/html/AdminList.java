@@ -43,8 +43,7 @@ public class AdminList extends AdministrationSectionExt {
 		
 		Map<String, String> map = new HashMap<String, String>();
 		
-		map.put("module/htmltojson/htmltojson.form", "htmltojson.title");
-		map.put("htmltojson/htmltojson.page", "htmltojson.refapp.title");
+		map.put("htmltojson/htmlFormToJsonHome.page", "htmltojson.refapp.title");
 		
 		return map;
 	}

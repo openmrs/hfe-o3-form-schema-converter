@@ -1,5 +1,6 @@
 package org.openmrs.module.htmltojson.htmltojson;
 
+import org.apache.commons.lang.WordUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Element;
 import org.openmrs.Concept;
@@ -20,12 +21,16 @@ public class HtmlObsTagExtractor {
 			return null;
 		}
 		
+		String conceptName = concept.getName().getName();
+		
 		HtmlFormDataPoint dataPoint = new HtmlFormDataPoint();
 		String requiredField = obsTag.attr("required");
 		String idAttr = obsTag.attr("id");
 		String obsLabel = HtmlFormUtil.extractQuestionLabel(obsTag);
 		
-		dataPoint.setQuestionLabel(obsLabel);
+		String questionLabel = obsLabel.isEmpty() || obsLabel.equals("\\") ? conceptName : obsLabel;
+		
+		dataPoint.setQuestionLabel(WordUtils.capitalizeFully(questionLabel));
 		
 		if (StringUtils.isNotBlank(requiredField) && requiredField.equals("true")) {
 			dataPoint.setRequiredField(true);
@@ -33,13 +38,15 @@ public class HtmlObsTagExtractor {
 		
 		if (StringUtils.isNotBlank(idAttr)) {
 			dataPoint.setFormFieldId(idAttr);
+		} else {
+			dataPoint.setFormFieldId(conceptName.toLowerCase().replace(" ", "_"));
 		}
 		
 		String cUuid = concept.getUuid();
 		dataPoint.setConceptUUID(cUuid);
 		
 		dataPoint.setConceptId(concept.getConceptId());
-		dataPoint.setConceptName(concept.getName().getName());
+		dataPoint.setConceptName(conceptName);
 		dataPoint.setDataType("obs");
 		String rendering = obsTag.attr("style");
 		String hasRowsAttr = obsTag.attr("rows");

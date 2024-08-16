@@ -76,29 +76,31 @@ public class HtmlFormUtil {
 				;
 				generateFileName = pathToResourceDir + generateFileName;
 				
-				System.out.println("Generated file name: " + generateFileName); // makes it easy to find the file in the directory configured to hold the forms outside of code
-				File file = new File(generateFileName);
-				String content = FileUtils.readFileToString(file, "UTF-8");
+				System.out.println("Generated file name: " + generateFileName); // makes it easy to find the file in
+				// the directory configured to hold the forms outside of code
 				
-				formHtml = content;
+				File file = new File(generateFileName);
+				
+				formHtml = FileUtils.readFileToString(file, "UTF-8");
+				
 				Document doc = Jsoup.parse(formHtml);
 				
 				formJson.put("name", htmlForm.getName());
 				formJson.put("description", htmlForm.getForm().getDescription());
-				formJson.put("version", "xxx");
+				formJson.put("version", htmlForm.getForm().getVersion());
 				formJson.put("published", false);
 				formJson.put("retired", false);
 				formJson.put("processor", "EncounterFormProcessor");
-				formJson.put("encounterType", htmlForm.getForm().getEncounterType().getUuid());
+				formJson.put("encounter", htmlForm.getForm().getEncounterType().getName());
 				formJson.put("referencedForms", JsonNodeFactory.instance.arrayNode());
 				formJson.put("uuid", htmlForm.getUuid());
 				
 				System.out.println("Form name: " + htmlForm.getName());
 				Element htmlform = doc.select("htmlform").first();
 				
-				Elements elementTags = htmlform.select("obs,obsgroup");
+				Elements elementTags = htmlform.select("obs,obsgroup,td");
 				Set<String> processedUngroupedCheckedInputs = new HashSet<String>();
-				
+				int currentIndex = 0;
 				for (Element element : elementTags) {
 					
 					// check the tag name
@@ -145,6 +147,16 @@ public class HtmlFormUtil {
 						} else {
 							
 							ObjectNode dataPointJson = generateJsonObjectForHtmlDataPoint(element);
+							if (currentIndex >= 3) {
+								int labelIndex = currentIndex - 2;
+								Element labelElement = elementTags.get(labelIndex);
+								String label = labelElement.toString().replace("<td class=\"lblcolor\">", "")
+								        .replace("</td" + ">", "");
+								
+								if (dataPointJson != null && !(label.startsWith("<td") || label.startsWith("<obs"))) {
+									dataPointJson.put("label", label);
+								}
+							}
 							
 							if (dataPointJson != null) {
 								questionsList.add(dataPointJson);
@@ -157,7 +169,7 @@ public class HtmlFormUtil {
 							questionsList.add(groupJson);
 						}
 					}
-					
+					currentIndex++;
 				}
 				
 			}
