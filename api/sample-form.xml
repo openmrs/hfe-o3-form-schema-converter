@@ -1,0 +1,7 @@
+ <htmlform>
+    <obs conceptId="5089AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" 
+         labelText="Weight" 
+         style="number" 
+         required="true" 
+         id="weight" />
+</htmlform>
