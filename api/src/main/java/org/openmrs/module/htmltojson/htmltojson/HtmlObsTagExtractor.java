@@ -11,6 +11,7 @@ import java.util.Map;
 public class HtmlObsTagExtractor {
 	
 	public static HtmlFormDataPoint extractObsTag(Element obsTag) {
+		System.out.println("Starting to extract obs tag with conceptId: " + obsTag.attr("conceptId"));
 		String conceptUUId = obsTag.attr("conceptId");
 		
 		Concept concept = HtmlFormUtil.getConceptByUuidOrId(conceptUUId);
@@ -119,7 +120,7 @@ public class HtmlObsTagExtractor {
 		} else if (concept.getDatatype().isBoolean()) {
 			dataPoint.setRendering("select");
 		}
-		
+		System.out.println("Done extracting obs tag. Rendering: " + dataPoint.getRendering());
 		return dataPoint;
 	}
 }
