@@ -3,8 +3,6 @@ package org.openmrs.module.htmltojson.htmltojson;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
-import org.openmrs.Concept;
-import org.openmrs.api.context.Context;
 
 import java.util.Map;
 
@@ -24,24 +22,19 @@ public class HtmlFormObsRenderer {
 	 * 
 	 * @return
 	 */
+	
+	//added this
 	public ObjectNode render() {
 		if (dataPoint == null)
 			return null;
 		
-		Concept concept = Context.getConceptService().getConceptByUuid(dataPoint.getConceptUUID());
+		//  No OpenMRS dependency — simple rendering
+		ObjectNode obsStub = generateQuestionStub();
+		ObjectNode optionsNode = generateOptionsStub();
 		
-		if (concept.getDatatype().isCoded()) {
-			return renderCodedObs();
-		} else if (concept.getDatatype().isBoolean()) {
-			return renderBooleansObs();
-		} else if (concept.getDatatype().isText()) {
-			return renderTextObs();
-		} else if (concept.getDatatype().isDateTime() || concept.getDatatype().isDate()) {
-			return renderDateObs();
-		} else if (concept.getDatatype().isNumeric()) {
-			return renderNumericObs();
-		}
-		return null;
+		obsStub.put("questionOptions", optionsNode);
+		
+		return obsStub;
 	}
 	
 	private ObjectNode renderNumericObs() {
@@ -95,6 +88,9 @@ public class HtmlFormObsRenderer {
 		if (dataPoint.getFormFieldId() != null) {
 			obsStub.put("id", dataPoint.getFormFieldId());
 		}
+		
+		// added this---
+		obsStub.put("required", dataPoint.getRequiredField());
 		
 		return obsStub;
 	}

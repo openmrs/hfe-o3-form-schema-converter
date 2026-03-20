@@ -59,3 +59,60 @@ Configurations required
 Accessing the pages
 -----------------------
 Navigate to <OpenMRS base url>/htmltojson/htmlFormToJsonHome.page
+
+## Running the Converter
+
+### Prerequisites
+- Java 8+
+- Maven
+- HTML Form Entry (HFE) form file
+- OpenMRS running locally
+
+### Steps
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/openmrs/hfe-o3-form-schema-converter.git
+cd hfe-o3-form-schema-converter
+```
+
+2. Build the project
+
+```bash
+mvn clean install
+```
+
+3. Locate the generated module
+
+After building, go to:
+
+```
+api/target/
+```
+
+You will find the module file:
+
+```
+htmltojson-api-1.0.0.jar
+```
+
+4. Install the module in OpenMRS
+
+Go to:
+
+```
+Administration → Manage Modules → Add or Upgrade Module
+```
+
+Upload the generated `.jar` file.
+
+5. Access the converter
+
+Open in your browser:
+
+```
+http://localhost:8080/openmrs/htmltojson/htmlFormToJsonHome.page
+```
+
+You can now paste an HTML Form Entry (HFE) form and convert it to the O3 form schema.
