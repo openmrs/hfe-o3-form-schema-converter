@@ -2,7 +2,6 @@
 For the HFE to O3 Form Schema conversion tool(s). 
 
 
-
 Description
 -----------
 This work automates the process of converting HFE schema to the new JSON form schema for o3.
