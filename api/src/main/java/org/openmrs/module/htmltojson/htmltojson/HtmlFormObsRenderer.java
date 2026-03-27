@@ -90,8 +90,23 @@ public class HtmlFormObsRenderer {
 	
 	private ObjectNode generateQuestionStub() {
 		ObjectNode obsStub = JsonNodeFactory.instance.objectNode();
-		obsStub.put("label", dataPoint.getQuestionLabel());
+		
+		String label = dataPoint.getQuestionLabel();
+		
+		if (label == null || label.trim().isEmpty()) {
+			Concept concept = Context.getConceptService().getConceptByUuid(dataPoint.getConceptUUID());
+			if (concept != null && concept.getName() != null) {
+				label = concept.getName().getName();
+			}
+		}
+		
+		if (label == null) {
+			label = "";
+		}
+		
+		obsStub.put("label", label);
 		obsStub.put("type", "obs");
+		
 		if (dataPoint.getFormFieldId() != null) {
 			obsStub.put("id", dataPoint.getFormFieldId());
 		}
