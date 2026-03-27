@@ -40,17 +40,34 @@ public class HtmlFormObsGroupRenderer {
 		
 		ArrayNode questionsList = JsonNodeFactory.instance.arrayNode();
 		
-		for (Element element : obsGroupTag.select("obs")) {
-			//System.out.println("Building obsgroup questions: ");
+		for (Element element : obsGroupTag.children()) {
+
+		    // Handle <obs> tags
+		    if (element.tagName().equalsIgnoreCase("obs")) {
 			
-			HtmlFormDataPoint dataPoint = HtmlObsTagExtractor.extractObsTag(element);
-			if (dataPoint == null) {
-				System.out.println("Encountered invalid concept UUID in the form schema. Ignoring the tag ");
-				continue;
-			}
-			HtmlFormObsRenderer renderer = new HtmlFormObsRenderer(dataPoint);
-			ObjectNode obsJson = renderer.render();
-			questionsList.add(obsJson);
+		        HtmlFormDataPoint dataPoint = HtmlObsTagExtractor.extractObsTag(element);
+		        if (dataPoint == null) {
+		            System.out.println("Invalid obs detected inside obsgroup. Skipping element: " + element);
+		            continue;
+		        }
+			
+		        HtmlFormObsRenderer renderer = new HtmlFormObsRenderer(dataPoint);
+		        ObjectNode obsJson = renderer.render();
+				if (obsJson != null) {
+				    questionsList.add(obsJson);
+				}
+		    }
+		
+		    // Handle nested <obsgroup> tags (NEW FEATURE)
+		    else if (element.tagName().equalsIgnoreCase("obsgroup")) {
+			
+		        HtmlFormObsGroupRenderer groupRenderer = new HtmlFormObsGroupRenderer(element);
+		        ObjectNode groupJson = groupRenderer.render();
+			
+		        if (groupJson != null) {
+		            questionsList.add(groupJson);
+		        }
+		    }
 		}
 		ObjectNode obsGroupObject = generateGroupStub(groupConcept.getUuid());
 		obsGroupObject.put("questions", questionsList);
