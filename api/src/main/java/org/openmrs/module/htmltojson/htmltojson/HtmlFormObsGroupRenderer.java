@@ -58,7 +58,6 @@ public class HtmlFormObsGroupRenderer {
 				}
 		    }
 		
-		    // Handle nested <obsgroup> tags (NEW FEATURE)
 		    else if (element.tagName().equalsIgnoreCase("obsgroup")) {
 			
 		        HtmlFormObsGroupRenderer groupRenderer = new HtmlFormObsGroupRenderer(element);
