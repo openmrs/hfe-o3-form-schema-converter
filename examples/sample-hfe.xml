@@ -1,0 +1,7 @@
+<htmlform>
+    <obs conceptId="1234AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="numeric" id="weight" labelText="Weight (kg)"/>
+    <obsgroup groupingConceptId="5678AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" labelText="Vitals Group">
+        <obs conceptId="9101AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="text" labelText="Notes"/>
+        <obs conceptId="1121AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" style="checkbox" labelText="Has Fever"/>
+    </obsgroup>
+</htmlform>
