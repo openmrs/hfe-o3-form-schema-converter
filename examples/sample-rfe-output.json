@@ -1,0 +1,49 @@
+{
+  "name": "Sample RFE Form",
+  "pages": [
+    {
+      "label": "Page 1",
+      "sections": [
+        {
+          "label": "Section 1",
+          "isExpanded": true,
+          "questions": [
+            {
+              "id": "1234AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "label": "Weight (kg)",
+              "type": "obs",
+              "questionOptions": {
+                "concept": "1234AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "rendering": "number"
+              }
+            },
+            {
+              "type": "obsGroup",
+              "label": "Vitals Group",
+              "questions": [
+                {
+                  "id": "9101AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                  "label": "Notes",
+                  "type": "obs",
+                  "questionOptions": {
+                    "concept": "9101AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "rendering": "text"
+                  }
+                },
+                {
+                  "id": "1121AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                  "label": "Has Fever",
+                  "type": "obs",
+                  "questionOptions": {
+                    "concept": "1121AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "rendering": "select"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

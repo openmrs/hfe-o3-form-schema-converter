@@ -41,6 +41,10 @@ public class HtmlFormUtil {
 	 * @throws IOException
 	 */
 	public static ObjectNode getFormSchemaJson(String formUuid, ResourceFactory resourceFactory) throws IOException {
+		return getFormSchemaJson(formUuid, resourceFactory, false);
+	}
+
+	public static ObjectNode getFormSchemaJson(String formUuid, ResourceFactory resourceFactory, boolean rfeMode) throws IOException {
 		Form form = Context.getFormService().getFormByUuid(formUuid);
 		ObjectNode formJson = JsonNodeFactory.instance.objectNode();
 		ArrayNode formPages = JsonNodeFactory.instance.arrayNode();
@@ -124,7 +128,7 @@ public class HtmlFormUtil {
 							
 							List<Element> allRelatedTags = relatedTags.get(actualConceptUuid);
 							if (allRelatedTags == null || allRelatedTags.isEmpty()) {
-								ObjectNode dataPointJson = generateJsonObjectForHtmlDataPoint(element);
+								ObjectNode dataPointJson = generateJsonObjectForHtmlDataPoint(element, rfeMode);
 								
 								if (dataPointJson != null) {
 									questionsList.add(dataPointJson);
@@ -144,23 +148,36 @@ public class HtmlFormUtil {
 							
 						} else {
 							
-							ObjectNode dataPointJson = generateJsonObjectForHtmlDataPoint(element);
+							ObjectNode dataPointJson = generateJsonObjectForHtmlDataPoint(element, rfeMode);
 							
 							if (dataPointJson != null) {
 								questionsList.add(dataPointJson);
 							}
 						}
 					} else if (element.normalName().equals("obsgroup")) {
-						HtmlFormObsGroupRenderer obsGroupRenderer = new HtmlFormObsGroupRenderer(element);
-						ObjectNode groupJson = obsGroupRenderer.render();
-						if (groupJson != null) {
-							questionsList.add(groupJson);
+						if (rfeMode) {
+							HtmlFormRfeObsGroupRenderer obsGroupRenderer = new HtmlFormRfeObsGroupRenderer(element);
+							ObjectNode groupJson = obsGroupRenderer.render();
+							if (groupJson != null) {
+								questionsList.add(groupJson);
+							}
+						} else {
+							HtmlFormObsGroupRenderer obsGroupRenderer = new HtmlFormObsGroupRenderer(element);
+							ObjectNode groupJson = obsGroupRenderer.render();
+							if (groupJson != null) {
+								questionsList.add(groupJson);
+							}
 						}
 					}
 					
 				}
 				
 			}
+		}
+		
+		if (rfeMode) {
+			String formName = form != null ? form.getName() : "";
+			return RfeSchemaBuilder.buildRfeSchema(formName, questionsList);
 		}
 		
 		defaultFormSection.put("questions", questionsList);
@@ -181,17 +198,26 @@ public class HtmlFormUtil {
 	 * @return
 	 */
 	public static ObjectNode generateJsonObjectForHtmlDataPoint(Element element) {
+		return generateJsonObjectForHtmlDataPoint(element, false);
+	}
+
+	public static ObjectNode generateJsonObjectForHtmlDataPoint(Element element, boolean buildRfe) {
 		HtmlFormDataPoint dataPoint = HtmlObsTagExtractor.extractObsTag(element);
 		if (dataPoint == null) {
 			System.out.println("Encountered invalid concept UUID in the form schema. Ignoring the tag ");
 			return null;
 		}
-		HtmlFormObsRenderer renderer = new HtmlFormObsRenderer(dataPoint);
-		ObjectNode obsJson = renderer.render();
-		if (obsJson != null) {
-			return obsJson;
+		if (buildRfe) {
+			HtmlFormRfeObsRenderer renderer = new HtmlFormRfeObsRenderer(dataPoint);
+			return renderer.render();
+		} else {
+			HtmlFormObsRenderer renderer = new HtmlFormObsRenderer(dataPoint);
+			ObjectNode obsJson = renderer.render();
+			if (obsJson != null) {
+				return obsJson;
+			}
+			return null;
 		}
-		return null;
 	}
 	
 	/**
